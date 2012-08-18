@@ -9,6 +9,7 @@ class CreateMeritActions < ActiveRecord::Migration
       t.integer :target_id
       t.boolean :processed, :default => false
       t.string  :log, :default => nil
+      t.integer  :points
       t.timestamps
     end
   end

@@ -1,7 +1,7 @@
 require "merit/models/#{Merit.orm}/merit_action"
 
 class MeritAction
-  attr_accessible :user_id, :action_method, :action_value, :had_errors, :target_model, :target_id, :processed, :log
+  attr_accessible :user_id, :action_method, :action_value, :had_errors, :target_model, :target_id, :processed, :log, :points
 
   # Check rules defined for a merit_action
   def check_rules
@@ -44,6 +44,7 @@ class MeritAction
         target.points += point_rule[:score]
         target.save
         log!("points_granted:#{point_rule[:score]}")
+        points!(point_rule[:score])
       end
     end
   end
@@ -59,6 +60,11 @@ class MeritAction
 
   def log!(str)
     self.log = "#{self.log}#{str}|"
+    self.save
+  end
+
+  def points!(int)
+    self.points = int
     self.save
   end
 
